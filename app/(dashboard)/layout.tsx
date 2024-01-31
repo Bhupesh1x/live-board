@@ -1,6 +1,6 @@
 import Navbar from "./_components/Navbar";
-import OrgSidebar from "./_components/OrgSidebar";
 import Sidebar from "./_components/Sidebar";
+import OrgSidebar from "./_components/OrgSidebar";
 
 type Props = {
   children: React.ReactNode;
