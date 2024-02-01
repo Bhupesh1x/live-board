@@ -1,8 +1,8 @@
 import { Plus } from "lucide-react";
 import { CreateOrganization } from "@clerk/nextjs";
 
-import { Dialog, DialogTrigger, DialogContent } from "@/components/ui/dialog";
 import Hint from "@/components/shared/Hint";
+import { Dialog, DialogTrigger, DialogContent } from "@/components/ui/dialog";
 
 function NewOrgButton() {
   return (
