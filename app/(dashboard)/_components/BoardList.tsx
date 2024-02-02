@@ -1,3 +1,7 @@
+import { useQuery } from "convex/react";
+
+import { api } from "@/convex/_generated/api";
+
 import EmptyState from "./EmptyState";
 import EmptyBoard from "./EmptyBoard";
 
@@ -15,7 +19,11 @@ export enum EmptyStateEnum {
 }
 
 function BoardList({ orgId, query }: Props) {
-  const board = [];
+  const board = useQuery(api.boards.get, { orgId });
+
+  if (board === undefined) {
+    return <div>Loading...</div>;
+  }
 
   if (!board?.length && query.search) {
     return <EmptyState type={EmptyStateEnum.SEARCH} />;
