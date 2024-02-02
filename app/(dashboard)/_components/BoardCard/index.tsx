@@ -5,6 +5,7 @@ import { formatDistanceToNow } from "date-fns";
 
 import Footer from "./Footer";
 import Overlay from "./Overlay";
+import { Skeleton } from "@/components/ui/skeleton";
 
 type Props = {
   id: string;
@@ -54,3 +55,11 @@ function BoardCard({
 }
 
 export default BoardCard;
+
+BoardCard.Skeleton = function BoardCardSkeleton() {
+  return (
+    <div className="aspect-[100/127] overflow-hidden rounded-lg">
+      <Skeleton className="h-full w-full" />
+    </div>
+  );
+};

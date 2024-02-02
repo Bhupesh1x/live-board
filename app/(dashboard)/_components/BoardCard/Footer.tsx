@@ -17,7 +17,9 @@ function Footer({
 }: Props) {
   return (
     <div className="p-3 relative bg-white">
-      <p className="text-[13px] truncate max-w-[calc(100%-20px)]">{title}</p>
+      <p className="text-[13px] font-semibold truncate max-w-[calc(100%-20px)]">
+        {title}
+      </p>
       <p className="text-[11px] opacity-0 group-hover:opacity-100 transition-opacity truncate text-muted-foreground">
         {authorLabel},{createdAtLabel}
       </p>
