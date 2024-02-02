@@ -1,4 +1,5 @@
 import EmptyState from "./EmptyState";
+import EmptyBoard from "./EmptyBoard";
 
 type Props = {
   orgId: string;
@@ -11,7 +12,6 @@ type Props = {
 export enum EmptyStateEnum {
   SEARCH = "SEARCH",
   FAVORITES = "FAVORITES",
-  BOARD = "BOARD",
 }
 
 function BoardList({ orgId, query }: Props) {
@@ -26,7 +26,7 @@ function BoardList({ orgId, query }: Props) {
   }
 
   if (!board?.length) {
-    return <EmptyState type={EmptyStateEnum.BOARD} />;
+    return <EmptyBoard />;
   }
 
   return (
