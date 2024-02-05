@@ -21,7 +21,7 @@ export enum EmptyStateEnum {
 }
 
 function BoardList({ orgId, query }: Props) {
-  const board = useQuery(api.boards.get, { orgId });
+  const board = useQuery(api.boards.get, { orgId, search: query.search });
 
   if (!board?.length && query.search) {
     return <EmptyState type={EmptyStateEnum.SEARCH} />;
