@@ -6,15 +6,24 @@ type Props = {
   isFavorite: boolean;
   authorLabel: string;
   createdAtLabel: string;
+  onClick: () => Promise<void>;
 };
 
 function Footer({
   title,
+  onClick,
   disabled,
   isFavorite,
   authorLabel,
   createdAtLabel,
 }: Props) {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.stopPropagation();
+    e.preventDefault();
+
+    onClick();
+  };
+
   return (
     <div className="p-3 relative bg-white">
       <p className="text-[13px] font-semibold truncate max-w-[calc(100%-20px)]">
@@ -26,6 +35,7 @@ function Footer({
 
       <button
         disabled={disabled}
+        onClick={handleClick}
         className={`opacity-0 group-hover:opacity-100 transition-opacity absolute top-3 right-3 text-muted-foreground hover:text-blue-600 ${
           disabled && "cursor-not-allowed opacity-75"
         }`}

@@ -63,7 +63,7 @@ function BoardList({ orgId, query }: Props) {
               orgId={board.orgId}
               imageUrl={board.imageUrl}
               createdAt={board._creationTime}
-              isFavorite={false}
+              isFavorite={board.isFavorite}
             />
           ))
         )}

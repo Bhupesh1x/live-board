@@ -1,8 +1,12 @@
 import Link from "next/link";
 import Image from "next/image";
+import { toast } from "sonner";
 import { useAuth } from "@clerk/nextjs";
 import { formatDistanceToNow } from "date-fns";
 import { MoreHorizontal } from "lucide-react";
+
+import { api } from "@/convex/_generated/api";
+import { useApiMutation } from "@/hooks/useApiMutation";
 
 import Footer from "./Footer";
 import Overlay from "./Overlay";
@@ -38,6 +42,28 @@ function BoardCard({
     addSuffix: true,
   });
 
+  const { mutate: favoriteMutate, pending: favoritePending } = useApiMutation(
+    api.board.favorite
+  );
+  const { mutate: unfavoriteMutate, pending: unfavoritePending } =
+    useApiMutation(api.board.unfavorite);
+
+  const onClick = async () => {
+    if (isFavorite) {
+      try {
+        await unfavoriteMutate({ id });
+      } catch (error) {
+        toast.error("Failed to unfavorite");
+      }
+    } else {
+      try {
+        await favoriteMutate({ id, orgId });
+      } catch (error) {
+        toast.error("Failed to favorite");
+      }
+    }
+  };
+
   return (
     <Link href={`/board/${id}`}>
       <div className="group aspect-[100/127] overflow-hidden rounded-lg border flex flex-col justify-between">
@@ -52,7 +78,8 @@ function BoardCard({
         </div>
         <Footer
           title={title}
-          disabled={false}
+          disabled={favoritePending || unfavoritePending}
+          onClick={onClick}
           isFavorite={isFavorite}
           authorLabel={authorLabel}
           createdAtLabel={createdAtLabel}
