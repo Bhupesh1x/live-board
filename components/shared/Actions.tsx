@@ -1,8 +1,9 @@
 import { toast } from "sonner";
-import { Link2, Trash2 } from "lucide-react";
+import { Link2, Pencil, Trash2 } from "lucide-react";
 import { DropdownMenuContentProps } from "@radix-ui/react-dropdown-menu";
 
 import { api } from "@/convex/_generated/api";
+import { useRenameModal } from "@/store/useRenameModal";
 import { useApiMutation } from "@/hooks/useApiMutation";
 
 import {
@@ -25,6 +26,8 @@ type Props = {
 
 function Actions({ id, children, title, side, sideOffset }: Props) {
   const { mutate, pending } = useApiMutation(api.board.remove);
+
+  const { onOpen } = useRenameModal();
 
   const copyLink = async () => {
     try {
@@ -59,6 +62,13 @@ function Actions({ id, children, title, side, sideOffset }: Props) {
         <DropdownMenuItem className="p-3 cursor-pointer" onClick={copyLink}>
           <Link2 className="h-4 w-4 mr-2" />
           Copy board link
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          className="p-3 cursor-pointer"
+          onClick={() => onOpen(id, title)}
+        >
+          <Pencil className="h-4 w-4 mr-2" />
+          Rename board name
         </DropdownMenuItem>
         <ConfirmModal
           disabled={pending}
