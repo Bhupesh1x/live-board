@@ -7,3 +7,9 @@ function Participants() {
 }
 
 export default Participants;
+
+Participants.Skeleton = function ParticipantsSkeleton() {
+  return (
+    <div className="absolute top-2 right-2 p-3 h-12 rounded-md shadow-md flex items-center bg-white w-[100px]" />
+  );
+};
