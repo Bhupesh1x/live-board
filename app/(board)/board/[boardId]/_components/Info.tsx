@@ -8,7 +8,7 @@ function Info() {
 
 export default Info;
 
-Info.Skeleton = function InfoSkeleton() {
+export const InfoSkeleton = () => {
   return (
     <div className="absolute top-2 left-2 px-1.5 h-12 rounded-md shadow-md flex items-center bg-white w-[300px]" />
   );
