@@ -1,7 +1,8 @@
-import { connectionIdToColor } from "@/lib/utils";
-import { useOther } from "@/liveblocks.config";
-import { MousePointer2 } from "lucide-react";
 import { memo } from "react";
+import { MousePointer2 } from "lucide-react";
+
+import { useOther } from "@/liveblocks.config";
+import { connectionIdToColor } from "@/lib/utils";
 
 type Props = {
   connectionId: number;
@@ -25,7 +26,7 @@ export const Cursor = memo(({ connectionId }: Props) => {
         transform: `translateX(${x}px) translateY(${y}px)`,
       }}
       height={50}
-      width={50}
+      width={name?.length * 10 + 24}
       className="relative drop-shadow-md"
     >
       <MousePointer2
@@ -35,6 +36,12 @@ export const Cursor = memo(({ connectionId }: Props) => {
           color: connectionIdToColor(connectionId),
         }}
       />
+      <div
+        className="absolute left-5 text-xs px-1.5 py-0.5 rounded-md text-white font-semibold"
+        style={{ backgroundColor: connectionIdToColor(connectionId) }}
+      >
+        {name}
+      </div>
     </foreignObject>
   );
 });

@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
-import { CanvasMode, CanvasState } from "@/types/canvas";
+import { Camera, CanvasMode, CanvasState } from "@/types/canvas";
 import {
   useCanRedo,
   useCanUndo,
@@ -14,6 +14,7 @@ import Info from "./Info";
 import Toolbar from "./Toolbar";
 import Participants from "./Participants";
 import { CursorPresence } from "./CursorPresence";
+import { pointerEventToCanvasPoint } from "@/lib/utils";
 
 type Props = {
   boardId: string;
@@ -23,21 +24,33 @@ function Canvas({ boardId }: Props) {
   const [canvasState, setCanvasState] = useState<CanvasState>({
     mode: CanvasMode.None,
   });
+  const [camera, setCamera] = useState<Camera>({ x: 0, y: 0 });
 
   const history = useHistory();
   const canUndo = useCanUndo();
   const canRedo = useCanRedo();
 
+  const onWheel = useCallback((e: React.WheelEvent) => {
+    setCamera((camera) => ({
+      x: camera.x - e.deltaX,
+      y: camera.y - e.deltaY,
+    }));
+  }, []);
+
   const onPointerMove = useMutation(
     ({ setMyPresence }, e: React.PointerEvent) => {
       e.preventDefault();
 
-      const current = { x: 0, y: 0 };
+      const current = pointerEventToCanvasPoint(e, camera);
 
       setMyPresence({ cursor: current });
     },
     []
   );
+
+  const onPointerLeave = useMutation(({ setMyPresence }) => {
+    setMyPresence({ cursor: null });
+  }, []);
 
   return (
     <main className="h-full w-full relative bg-neutral-100 touch-none">
@@ -51,7 +64,12 @@ function Canvas({ boardId }: Props) {
         canUndo={canUndo}
         canRedo={canRedo}
       />
-      <svg className="h-[100vh] w-[100vw]">
+      <svg
+        onWheel={onWheel}
+        onPointerMove={onPointerMove}
+        onPointerLeave={onPointerLeave}
+        className="h-[100vh] w-[100vw]"
+      >
         <g>
           <CursorPresence />
         </g>
