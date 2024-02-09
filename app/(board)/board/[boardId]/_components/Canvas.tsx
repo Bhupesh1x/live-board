@@ -20,6 +20,8 @@ type Props = {
   boardId: string;
 };
 
+const MAX_LAYERS = 100;
+
 function Canvas({ boardId }: Props) {
   const [canvasState, setCanvasState] = useState<CanvasState>({
     mode: CanvasMode.None,
@@ -70,7 +72,7 @@ function Canvas({ boardId }: Props) {
         onPointerLeave={onPointerLeave}
         className="h-[100vh] w-[100vw]"
       >
-        <g>
+        <g style={{ transform: `translate(${camera.x}px, ${camera.y}px)` }}>
           <CursorPresence />
         </g>
       </svg>
